@@ -1,10 +1,5 @@
 const getNthElement = (index, array) => {
-  const index2 = index - array.length;
-
-  if (index >= array.length) {
-    return array[index2];
-  }
-  return array[index];
+  return array[index % array.length];
 };
 
 const arrayToCSVString = array => {
@@ -28,56 +23,39 @@ const removeNthElement = (index, array) => {
 };
 
 const numbersToStrings = numbers => {
-  const numberString = numbers.map(number => {
-    return number.toString();
-  });
-  return numberString;
+  return numbers.map(number => number.toString());
 };
 
 const uppercaseWordsInArray = strings => {
-  const uppercaseWords = strings.map(word => {
-    return word.toUpperCase();
-  });
-  return uppercaseWords;
+  return strings.map(word => word.toUpperCase());
 };
 
 const reverseWordsInArray = strings => {
-  const stringsToArrays = strings.map(element => {
-    return element.split('').reverse();
-  });
-  const backToStrings = stringsToArrays.map(arrayElement => {
-    return arrayElement.toString().replaceAll(',', '');
-  });
-  return backToStrings;
+  return strings.map(string =>
+    string
+      .split('')
+      .reverse()
+      .join(''),
+  );
 };
 
 const onlyEven = numbers => {
-  const evenNumbers = numbers.filter(number => {
-    return number % 2 === 0;
-  });
-  return evenNumbers;
+  return numbers.filter(number => number % 2 === 0);
 };
 
 const removeNthElement2 = (index, array) => {
   const firstHalf = array.slice(0, index);
-  const secondHalf = array.slice(-1);
+  const secondHalf = array.slice(index + 1);
   return firstHalf.concat(secondHalf);
 };
 
 const elementsStartingWithAVowel = strings => {
-  const firstLetter = strings.filter(
-    string =>
-      string.toLowerCase().startsWith('a') ||
-      string.toLowerCase().startsWith('e') ||
-      string.toLowerCase().startsWith('i') ||
-      string.toLowerCase().startsWith('o') ||
-      string.toLowerCase().startsWith('u'),
-  );
-  return firstLetter;
+  const vowels = ['a', 'e', 'i', 'o', 'u'];
+  return strings.filter(string => vowels.includes(string[0].toLowerCase()));
 };
 
 const removeSpaces = string => {
-  return string.replaceAll(' ', '');
+  return string.split(' ').join('');
 };
 
 const sumNumbers = numbers => {
@@ -88,20 +66,7 @@ const sumNumbers = numbers => {
 };
 
 const sortByLastLetter = strings => {
-  const stringsToArrays2 = strings.map(element => {
-    return Array.from(element)
-      .reverse()
-      .join('');
-  });
-  const arraysSorted = stringsToArrays2.sort();
-  const finalArray = arraysSorted.map(sortedArr => {
-    return sortedArr
-      .split('')
-      .reverse()
-      .toString()
-      .replaceAll(',', '');
-  });
-  return finalArray;
+  return strings.sort((a, b) => a.charCodeAt(a.length - 1) - b.charCodeAt(b.length - 1));
 };
 
 module.exports = {

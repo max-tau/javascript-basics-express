@@ -19,12 +19,7 @@ function one(a, b) {
 }
 
 function truthiness(a) {
-  if (a) {
-    return true;
-  }
-  if (!a) {
-    return false;
-  }
+  return !!a;
 }
 
 function isEqual(a, b) {
@@ -40,17 +35,11 @@ function isLessThanOrEqualTo(a, b) {
 }
 
 function isOdd(a) {
-  if (a % 2 !== 0) {
-    return true;
-  }
-  return false;
+  return a % 2 !== 0;
 }
 
 function isEven(a) {
-  if (a % 2 === 0) {
-    return true;
-  }
-  return false;
+  return a % 2 === 0;
 }
 
 function isSquare(a) {
@@ -58,10 +47,7 @@ function isSquare(a) {
 }
 
 function startsWith(char, string) {
-  if (char === string.charAt(0)) {
-    return true;
-  }
-  return false;
+  return char === string.charAt(0);
 }
 
 function containsVowels(string) {
@@ -69,10 +55,7 @@ function containsVowels(string) {
 }
 
 function isLowerCase(string) {
-  if (string == string.toLowerCase()) {
-    return true;
-  }
-  return false;
+  return string === string.toLowerCase();
 }
 
 module.exports = {

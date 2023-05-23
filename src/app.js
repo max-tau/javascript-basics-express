@@ -42,8 +42,7 @@ app.get('/strings/first-character/:string', (req, res) => {
 });
 
 app.get('/strings/first-characters/:string', (req, res) => {
-  const qlength = req.query.length;
-  res.json({ result: firstCharacters(req.params.string, qlength) });
+  res.json({ result: firstCharacters(req.params.string, req.query.length) });
 });
 
 //  End of strings, start of numbers
@@ -55,9 +54,9 @@ app.get('/numbers/add/:firstNum/and/:secondNum', (req, res) => {
 
   if (isNotANumber) {
     res.status(400).json({ error: 'Parameters must be valid numbers.' });
-  } else {
-    res.json({ result: add(firstNumber, secondNumber) });
   }
+
+  res.json({ result: add(firstNumber, secondNumber) });
 });
 
 app.get('/numbers/subtract/:firstNum/from/:secondNum', (req, res) => {
@@ -67,9 +66,9 @@ app.get('/numbers/subtract/:firstNum/from/:secondNum', (req, res) => {
 
   if (isNotANumber) {
     res.status(400).json({ error: 'Parameters must be valid numbers.' });
-  } else {
-    res.json({ result: subtract(secondNumber, firstNumber) });
   }
+
+  res.json({ result: subtract(secondNumber, firstNumber) });
 });
 
 app.post('/numbers/multiply', (req, res) => {
@@ -80,11 +79,12 @@ app.post('/numbers/multiply', (req, res) => {
 
   if (notEnoughParams) {
     res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } else if (isNotANumber) {
-    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: multiply(firstNumber, secondNumber) });
   }
+  if (isNotANumber) {
+    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  }
+
+  res.status(200).json({ result: multiply(firstNumber, secondNumber) });
 });
 
 app.post('/numbers/divide', (req, res) => {
@@ -97,15 +97,18 @@ app.post('/numbers/divide', (req, res) => {
 
   if (firstParamIsZero) {
     res.json({ result: 0 });
-  } else if (secondParamIsZero) {
-    res.status(400).json({ error: 'Unable to divide by 0.' });
-  } else if (notEnoughParams) {
-    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } else if (isNotANumber) {
-    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: divide(firstNumber, secondNumber) });
   }
+  if (secondParamIsZero) {
+    res.status(400).json({ error: 'Unable to divide by 0.' });
+  }
+  if (notEnoughParams) {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  }
+  if (isNotANumber) {
+    res.status(400).json({ error: 'Parameters "a" and "b" must be valid numbers.' });
+  }
+
+  res.status(200).json({ result: divide(firstNumber, secondNumber) });
 });
 
 app.post('/numbers/remainder', (req, res) => {
@@ -118,15 +121,18 @@ app.post('/numbers/remainder', (req, res) => {
 
   if (firstParamIsZero) {
     res.json({ result: 0 });
-  } else if (secondParamIsZero) {
-    res.status(400).json({ error: 'Unable to divide by 0.' });
-  } else if (notEnoughParams) {
-    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
-  } else if (isNotANumber) {
-    res.status(400).json({ error: 'Parameters must be valid numbers.' });
-  } else {
-    res.status(200).json({ result: remainder(firstNumber, secondNumber) });
   }
+  if (secondParamIsZero) {
+    res.status(400).json({ error: 'Unable to divide by 0.' });
+  }
+  if (notEnoughParams) {
+    res.status(400).json({ error: 'Parameters "a" and "b" are required.' });
+  }
+  if (isNotANumber) {
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
+  }
+
+  res.status(200).json({ result: remainder(firstNumber, secondNumber) });
 });
 
 //  End of numbers, start of booleans
@@ -145,9 +151,9 @@ app.get('/booleans/is-odd/:number', (req, res) => {
 
   if (isNotNumber) {
     res.status(400).json({ error: 'Parameter must be a number.' });
-  } else {
-    res.status(200).json({ result: isOdd(paramNumber) });
   }
+
+  res.status(200).json({ result: isOdd(paramNumber) });
 });
 
 app.get('/booleans/:string/starts-with/:character', (req, res) => {
@@ -156,9 +162,9 @@ app.get('/booleans/:string/starts-with/:character', (req, res) => {
 
   if (paramCharacter.length > 1) {
     res.status(400).json({ error: 'Parameter "character" must be a single character.' });
-  } else {
-    res.status(200).json({ result: startsWith(paramCharacter, paramString) });
   }
+
+  res.status(200).json({ result: startsWith(paramCharacter, paramString) });
 });
 
 //  End of booleans, start of arrays
